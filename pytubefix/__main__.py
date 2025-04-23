@@ -372,6 +372,9 @@ class YouTube:
                 if reason == (
                         'Join this channel to get access to members-only content '
                         'like this video, and other exclusive perks.'
+                ) or (
+                        'Join this channel from your computer or Android app '
+                        'to get access to members-only content like this video.'
                 ):
                     raise exceptions.MembersOnly(video_id=self.video_id)
 
@@ -785,15 +788,18 @@ class YouTube:
                 # The type of video with this structure is not yet known.
                 # First reported in: https://github.com/JuanBindez/pytubefix/issues/351
                 elif 'twoColumnWatchNextResults' in self.vid_details['contents']:
-                    self._title = self.vid_details['contents'][
+                    contents = self.vid_details['contents'][
                         'twoColumnWatchNextResults'][
                         'results'][
                         'results'][
-                        'contents'][0][
-                        'videoPrimaryInfoRenderer'][
-                        'title'][
-                        'runs'][0][
-                        'text']
+                        'contents']
+                    for c in contents:
+                        if 'videoPrimaryInfoRenderer' in c:
+                            self._title = c['videoPrimaryInfoRenderer'][
+                                'title'][
+                                'runs'][0][
+                                'text']
+                            break
 
                 logger.debug('Found title in vid_details')
         except KeyError as e:
@@ -802,7 +808,7 @@ class YouTube:
             self.check_availability()
             raise exceptions.PytubeFixError(
                 (
-                    f'Exception while accessing title of {self.watch_url}. '
+                    f'Exception while accessing title of {self.watch_url} with the {self.client} client.'
                     'Please file a bug report at https://github.com/JuanBindez/pytubefix'
                 )
             ) from e

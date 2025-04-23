@@ -458,13 +458,13 @@ _default_clients = {
             'context': {
                 'client': {
                     'clientName': 'TVHTML5',
-                    'clientVersion': '7.20240813.07.00',
+                    'clientVersion': '7.20250120.19.00',
                     'platform': 'TV'
                 }
             }
         },
         'header': {
-            'User-Agent': 'Mozilla/5.0',
+            'User-Agent': 'Mozilla/5.0 (ChromiumStylePlatform) Cobalt/Version',
             'X-Youtube-Client-Name': '7'
         },
         'api_key': 'AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8',
