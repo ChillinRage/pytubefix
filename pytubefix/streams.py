@@ -284,6 +284,10 @@ class Stream:
             Youtube video title
         """
         return self._monostate.title or "Unknown YouTube Video Title"
+    
+    @property
+    def safe_title(self,) -> str:
+        return safe_filename(self.title)
 
     @property
     def filesize_approx(self) -> int:
